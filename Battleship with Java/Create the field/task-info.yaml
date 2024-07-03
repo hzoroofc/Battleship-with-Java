@@ -6,6 +6,9 @@ files:
   - name: test/Tests.java
     visible: false
     learner_created: false
+  - name: src/battleship/Koordinaten.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35304#comment
 status: Unchecked
 feedback:
