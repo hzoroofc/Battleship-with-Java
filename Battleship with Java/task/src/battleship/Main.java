@@ -1,7 +1,5 @@
 package battleship;
 
-import com.sun.jdi.CharValue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,8 +8,34 @@ public class Main {
 
     public static class userException extends Exception {
         userException(String exp) {
-            System.out.println("Error!");
+            super(exp);
         }
+    }
+
+    public static boolean pruefeKoordinaten(Koordinaten koordinaten) throws userException{
+
+        if ((int) koordinaten.secondCoordnY() > 74 ||
+                (int) koordinaten.secondCoordnY() < 65 ||
+                (int) koordinaten.firstCoordnY() < 65 ||
+                (int) koordinaten.firstCoordnY() > 74
+        ) {
+            //throw new userException("Error");
+            throw new userException("Error");
+        }
+
+        if (koordinaten.secondCoordnX() > 10 || koordinaten.secondCoordnX() < 1 ||
+                koordinaten.firstCoordnX() > 10 || koordinaten.firstCoordnX() < 1) {
+            //throw new userException("Error");
+            throw new userException("Error");
+        }
+
+        if ( koordinaten.firstCoordnY() != koordinaten.secondCoordnY()) {
+            if (koordinaten.secondCoordnX() != koordinaten.firstCoordnX()) {
+                //throw new userException("Error");
+                throw new userException("Error");
+            }
+        }
+        return true;
     }
 
     public static void battleArea() {
@@ -42,14 +66,16 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws userException {
+
+
+    public static void main(String[] args) {
         battleArea();
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the coordinates of the ship:");
         String coordinatesStr = scanner.nextLine();
         String[] Coordinates = coordinatesStr.split("\\s+");
-        String secondCoordn= Coordinates[1];;
+        String secondCoordn= Coordinates[1];
         String firstCoordn = Coordinates[0];
 
         String[] xyFirstCoordn = firstCoordn.split("");
@@ -81,42 +107,27 @@ public class Main {
             );
         }
 
-        if ((int) koordinaten.secondCoordnY() > 74 ||
-                (int) koordinaten.secondCoordnY() < 65 ||
-                (int) koordinaten.firstCoordnY() < 65 ||
-                (int) koordinaten.firstCoordnY() > 74
-        ) {
-            //throw new userException("Error");
+        try {
+            pruefeKoordinaten(koordinaten);
+        } catch (userException e) {
             System.out.println("Error!");
             return;
         }
 
-        if (koordinaten.secondCoordnX() > 10 || koordinaten.secondCoordnX() < 1 ||
-                koordinaten.firstCoordnX() > 10 || koordinaten.firstCoordnX() < 1) {
-            //throw new userException("Error");
-            System.out.println("Error!");
-            return;
-        }
-
-        int shipLength = 0;
+        int shipLength;
         if (koordinaten.firstCoordnY() == koordinaten.secondCoordnY()) {
             shipLength = koordinaten.secondCoordnX() - koordinaten.firstCoordnX() + 1;
             System.out.println("Length: " + shipLength);
 
             System.out.print("Parts: ");
             for (int i = koordinaten.firstCoordnX(); i <= koordinaten.secondCoordnX(); i++) {
-                System.out.print(String.valueOf(koordinaten.firstCoordnY()) + String.valueOf(i) + " ");
+                System.out.print((koordinaten.firstCoordnY()) + (i) + " ");
             }
         }else {
-            if (koordinaten.secondCoordnX() != koordinaten.firstCoordnX()) {
-                //throw new userException("Error");
-                System.out.println("Error!");
-                return;
-            }
             shipLength = (int) koordinaten.secondCoordnY() - (int) koordinaten.firstCoordnY() + 1;
             System.out.println("Length: " + shipLength);
 
-            for(int i = (int) koordinaten.firstCoordnY(); i <= (int) koordinaten.secondCoordnY(); i++) {
+            for(int i = koordinaten.firstCoordnY(); i <=  koordinaten.secondCoordnY(); i++) {
                 System.out.print(String.valueOf((char) i).concat(String.valueOf(koordinaten.firstCoordnX())).concat(" "));
             }
 
