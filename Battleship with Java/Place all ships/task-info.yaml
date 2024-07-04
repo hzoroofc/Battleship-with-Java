@@ -6,6 +6,25 @@ files:
   - name: test/Tests.java
     visible: false
     learner_created: false
+  - name: src/battleship/Koordinaten.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/BattleShipsKordn.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/BattleshipLength.java
+    visible: true
+    learner_created: true
+  - name: out/production/classes/battleship/BattleshipLength.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: .DS_Store
+    visible: true
+    learner_created: true
+  - name: src/.DS_Store
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35305#comment
 status: Unchecked
 record: -1
