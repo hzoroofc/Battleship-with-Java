@@ -25,6 +25,25 @@ files:
   - name: src/.DS_Store
     visible: true
     learner_created: true
+  - name: out/production/classes/battleship/BattleShipsKordn.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: src/battleship/Aufgabe1CreateTheField.java
+    visible: true
+    learner_created: true
+  - name: out/production/classes/battleship/Aufgabe1CreateTheField.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main$userException.class
+    visible: true
+    is_binary: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35305#comment
 status: Unchecked
-record: -1
+record: 2

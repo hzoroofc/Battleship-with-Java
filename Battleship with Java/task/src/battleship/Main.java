@@ -8,11 +8,13 @@ public class Main {
 
     public static class userException extends Exception {
         userException(String exp) {
-            System.out.println("ERROR!");;
+            System.out.println(exp);
         }
     }
 
-    public static boolean pruefeKoordinaten(Koordinaten koordinaten) throws userException{
+    public static boolean pruefeKoordinaten(Koordinaten koordinaten) {
+
+        boolean pruefung = true;
 
         if ((int) koordinaten.secondCoordnY() > 74 ||
                 (int) koordinaten.secondCoordnY() < 65 ||
@@ -20,23 +22,31 @@ public class Main {
                 (int) koordinaten.firstCoordnY() > 74
         ) {
             //throw new userException("Error");
-            throw new userException("Error");
+            pruefung = false;
         }
 
         if (koordinaten.secondCoordnX() > 10 || koordinaten.secondCoordnX() < 1 ||
                 koordinaten.firstCoordnX() > 10 || koordinaten.firstCoordnX() < 1) {
             //throw new userException("Error");
-            throw new userException("Error");
+            pruefung = false;
         }
 
-        if ( koordinaten.firstCoordnY() != koordinaten.secondCoordnY()) {
+        if (koordinaten.firstCoordnY() != koordinaten.secondCoordnY()) {
             if (koordinaten.secondCoordnX() != koordinaten.firstCoordnX()) {
                 //throw new userException("Error");
-                throw new userException("Error");
+                pruefung = false;
             }
         }
-        return true;
+
+        if (koordinaten.shipLength() != BattleshipLength.valueOf(koordinaten.shipName()).getLength()) {
+            System.out.println("Error! Wrong length of the " + koordinaten.shipName() + "! Try again.");
+            pruefung = false;
+           // throw new userException("Error! Wrong length of the " + koordinaten.shipName() + "! Try again.");
+        }
+
+        return pruefung;
     }
+
     public static void battleArea() {
         ArrayList<Character> matrixRows = new ArrayList<>();
         List<ArrayList<Character>> matrix = new ArrayList<ArrayList<Character>>();
@@ -177,20 +187,14 @@ public static Koordinaten shipEingabe(String shipName) {
             areafields,
             shipLength);
 
-    try {
-        pruefeKoordinaten(koordinaten);
-    } catch (userException e) {
-        System.out.println("Error!");
-    }
     return koordinaten;
-
 }
 
-    public static void main(String[] args) throws userException {
+    public static void main(String[] args) {
 
 
         //String[] shipNames = {"AIRCRAFTCARRIER", "BATTLESHIP", "SUBMARINE", "CRUISER", "DESTROYER"};
-
+        battleArea();
         List<String> shipNames = new ArrayList<String>();
         shipNames.add("AIRCRAFTCARRIER");
         shipNames.add("BATTLESHIP");
@@ -202,13 +206,12 @@ public static Koordinaten shipEingabe(String shipName) {
 
         Koordinaten battleShip;
         for (String shipName : shipNames) {
-            battleShip = shipEingabe(shipName);
+            do {
+                battleShip = shipEingabe(shipName);
+            } while (!pruefeKoordinaten(battleShip));
+
             koordinaenBattleShips.add(battleShip);
-            if(pruefeKoordinaten(battleShip)) {
-                battleArea(koordinaenBattleShips);
-            } else {
-                return;
-            }
+            battleArea(koordinaenBattleShips);
 
         }
 

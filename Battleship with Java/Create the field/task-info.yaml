@@ -9,9 +9,38 @@ files:
   - name: src/battleship/Koordinaten.java
     visible: true
     learner_created: true
+  - name: out/production/classes/battleship/Main.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main$userException.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: src/battleship/BattleShipsKordn.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/BattleshipLength.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/Aufgabe1CreateTheField.java
+    visible: true
+    learner_created: true
+  - name: out/production/.DS_Store
+    visible: true
+    learner_created: true
+  - name: out/production/classes/battleship/BattleShipsKordn.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/BattleshipLength.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Aufgabe1CreateTheField.class
+    visible: true
+    is_binary: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35304#comment
-status: Unchecked
-feedback:
-  message: Local check isn't available
-  time: "Thu, 04 Jul 2024 12:08:20 UTC"
+status: Failed
 record: 1
