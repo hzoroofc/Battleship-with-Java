@@ -1,6 +1,7 @@
 package battleship;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,6 +44,9 @@ public class Main {
             pruefung = false;
            // throw new userException("Error! Wrong length of the " + koordinaten.shipName() + "! Try again.");
         }
+
+
+
 
         return pruefung;
     }
@@ -203,18 +207,35 @@ public static Koordinaten shipEingabe(String shipName) {
         shipNames.add("DESTROYER");
 
         ArrayList<Koordinaten> koordinaenBattleShips = new ArrayList<Koordinaten>();
+        List<String> occupiedFields = new ArrayList<String>();
 
         Koordinaten battleShip;
+        boolean felderBereitsBesetzt = false;
         for (String shipName : shipNames) {
             do {
+                felderBereitsBesetzt = false;
                 battleShip = shipEingabe(shipName);
-            } while (!pruefeKoordinaten(battleShip));
+                for (int i = 0; i < occupiedFields.size(); i++) {
+                    if (battleShip.areaFields().contains(occupiedFields.get(i))) {
+                        felderBereitsBesetzt = true;
+                        System.out.println("Error! Field are already taken.");
+                        break;
+                    }
+                }
+                if (felderBereitsBesetzt){
+//                    felderBereitsBesetzt = false;
+                    occupiedFields.removeAll(battleShip.areaFields());
+                } else {
+                    occupiedFields.addAll(battleShip.areaFields());
+                    System.out.println(occupiedFields.toString());
+                }
+‚
+            } while (!pruefeKoordinaten(battleShip) || felderBereitsBesetzt);
 
             koordinaenBattleShips.add(battleShip);
             battleArea(koordinaenBattleShips);
 
         }
-
 
 
 
