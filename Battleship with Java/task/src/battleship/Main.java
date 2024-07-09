@@ -45,9 +45,6 @@ public class Main {
            // throw new userException("Error! Wrong length of the " + koordinaten.shipName() + "! Try again.");
         }
 
-
-
-
         return pruefung;
     }
 
@@ -122,8 +119,9 @@ public class Main {
     }
 
 public static Koordinaten shipEingabe(String shipName) {
+
     Scanner scanner = new Scanner(System.in);
-    System.out.println("Enter the coordinates of the ship: " + shipName);
+    System.out.println("Enter the coordinates of the ship: " + shipName + " Length (" + BattleshipLength.valueOf(shipName).getLength() + ") ");
     String coordinatesStr = scanner.nextLine();
     String[] Coordinates = coordinatesStr.split("\\s+");
     String secondCoordn= Coordinates[1];
@@ -208,9 +206,11 @@ public static Koordinaten shipEingabe(String shipName) {
 
         ArrayList<Koordinaten> koordinaenBattleShips = new ArrayList<Koordinaten>();
         List<String> occupiedFields = new ArrayList<String>();
+        List<String> adjacentFiles = new ArrayList<String>();
 
         Koordinaten battleShip;
         boolean felderBereitsBesetzt = false;
+
         for (String shipName : shipNames) {
             do {
                 felderBereitsBesetzt = false;
@@ -222,14 +222,14 @@ public static Koordinaten shipEingabe(String shipName) {
                         break;
                     }
                 }
-                if (felderBereitsBesetzt){
-//                    felderBereitsBesetzt = false;
+                if (felderBereitsBesetzt || !pruefeKoordinaten(battleShip)) {
                     occupiedFields.removeAll(battleShip.areaFields());
                 } else {
                     occupiedFields.addAll(battleShip.areaFields());
-                    System.out.println(occupiedFields.toString());
+                    fillAdjacent(occupiedFields);
+                    System.out.println(occupiedFields);
                 }
-‚
+
             } while (!pruefeKoordinaten(battleShip) || felderBereitsBesetzt);
 
             koordinaenBattleShips.add(battleShip);
@@ -238,6 +238,27 @@ public static Koordinaten shipEingabe(String shipName) {
         }
 
 
+
+
+    }
+
+    private static void fillAdjacent(List<String> occupiedFields) {
+        List<String> adjacentFields = new ArrayList<>();
+        List<String> koordn = new ArrayList<>();
+        for (int i = 0; i < occupiedFields.size(); i++){
+            System.out.println("adjacent: " + occupiedFields.get(i));
+            koordn = List.of(occupiedFields.get(i).split(""));
+
+            String yK = (String) koordn.get(0);
+            List<String> xK = koordn.subList(1, koordn.size());
+            String xKstr = "";
+            for (int j = 0; j < xK.size();j++) {
+                xKstr += xK.get(j);
+            }
+
+            System.out.println(yK);
+            System.out.println(xKstr);
+        }
 
 
     }
