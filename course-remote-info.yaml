@@ -108,8 +108,6 @@ topics:
       theory_id: 3552
     - title: NullPointerException
       theory_id: 1945
-    - title: What is object-oriented programming
-      theory_id: 3614
     - title: Array exceptions
       theory_id: 1940
     - title: Defining classes

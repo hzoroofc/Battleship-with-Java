@@ -42,8 +42,5 @@ files:
     is_binary: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35304#comment
-status: Unchecked
-feedback:
-  message: Local check isn't available
-  time: "Tue, 09 Jul 2024 12:07:07 UTC"
+status: Failed
 record: 1
