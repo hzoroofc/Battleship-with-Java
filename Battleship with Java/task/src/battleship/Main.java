@@ -130,7 +130,7 @@ public class Main {
     public static Koordinaten shipEingabe(String shipName) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the coordinates of the ship: " + shipName + " Length (" + BattleshipLength.valueOf(shipName).getLength() + ") ");
+        System.out.println("Enter the coordinates of the " + shipName + " (" + BattleshipLength.valueOf(shipName).getLength() + " cells):");
         String coordinatesStr = scanner.nextLine();
         String[] Coordinates = coordinatesStr.split("\\s+");
         String secondCoordn= Coordinates[1];
@@ -244,7 +244,7 @@ public class Main {
                 }
                 fehelerMeldung = pruefeKoordinaten(battleShip);
                 if (felderBereitsBesetzt || !fehelerMeldung.isEmpty()) {
-                    System.out.println("Error!");
+                    System.out.println("Error");
                     occupiedFields.removeAll(battleShip.areaFields());
                 } else {
                     occupiedFields.addAll(battleShip.areaFields());
