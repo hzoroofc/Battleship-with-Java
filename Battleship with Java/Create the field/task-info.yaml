@@ -9,14 +9,6 @@ files:
   - name: src/battleship/Koordinaten.java
     visible: true
     learner_created: true
-  - name: out/production/classes/battleship/Main.class
-    visible: true
-    is_binary: true
-    learner_created: true
-  - name: out/production/classes/battleship/Main$userException.class
-    visible: true
-    is_binary: true
-    learner_created: true
   - name: src/battleship/BattleShipsKordn.java
     visible: true
     learner_created: true
@@ -41,6 +33,17 @@ files:
     visible: true
     is_binary: true
     learner_created: true
+  - name: out/production/classes/battleship/Main$userException.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main.class
+    visible: true
+    is_binary: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35304#comment
-status: Failed
+status: Unchecked
+feedback:
+  message: Local check isn't available
+  time: "Tue, 09 Jul 2024 02:01:35 UTC"
 record: 1

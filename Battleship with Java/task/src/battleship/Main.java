@@ -210,6 +210,7 @@ public static Koordinaten shipEingabe(String shipName) {
 
         Koordinaten battleShip;
         boolean felderBereitsBesetzt = false;
+        List<String> adjacentFields = new ArrayList<>();
 
         for (String shipName : shipNames) {
             do {
@@ -222,11 +223,20 @@ public static Koordinaten shipEingabe(String shipName) {
                         break;
                     }
                 }
+
+                for (int i = 0; i < adjacentFields.size(); i++) {
+                    if (battleShip.areaFields().contains(adjacentFields.get(i))) {
+                        felderBereitsBesetzt = true;
+                        System.out.println("Error! Field are already taken.");
+                        break;
+                    }
+                }
+
                 if (felderBereitsBesetzt || !pruefeKoordinaten(battleShip)) {
                     occupiedFields.removeAll(battleShip.areaFields());
                 } else {
                     occupiedFields.addAll(battleShip.areaFields());
-                    fillAdjacent(occupiedFields);
+                    adjacentFields = fillAdjacent(occupiedFields);
                     System.out.println(occupiedFields);
                 }
 
@@ -242,7 +252,7 @@ public static Koordinaten shipEingabe(String shipName) {
 
     }
 
-    private static void fillAdjacent(List<String> occupiedFields) {
+    private static List<String> fillAdjacent(List<String> occupiedFields) {
         List<String> adjacentFields = new ArrayList<>();
         List<String> koordn = new ArrayList<>();
         for (int i = 0; i < occupiedFields.size(); i++){
@@ -255,11 +265,18 @@ public static Koordinaten shipEingabe(String shipName) {
             for (int j = 0; j < xK.size();j++) {
                 xKstr += xK.get(j);
             }
+            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr)+1)));
+            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr)-1)));
+            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0)+1)).concat(xKstr));
+            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0)-1)).concat(xKstr));
 
             System.out.println(yK);
             System.out.println(xKstr);
+            System.out.println(adjacentFields.toString());
+
+
         }
 
-
+        return adjacentFields;
     }
 }
