@@ -9,9 +9,6 @@ files:
   - name: src/battleship/Koordinaten.java
     visible: true
     learner_created: true
-  - name: src/battleship/BattleShipsKordn.java
-    visible: true
-    learner_created: true
   - name: src/battleship/BattleshipLength.java
     visible: true
     learner_created: true
@@ -25,10 +22,6 @@ files:
   - name: src/.DS_Store
     visible: true
     learner_created: true
-  - name: out/production/classes/battleship/BattleShipsKordn.class
-    visible: true
-    is_binary: true
-    learner_created: true
   - name: src/battleship/Aufgabe1CreateTheField.java
     visible: true
     learner_created: true
@@ -36,14 +29,20 @@ files:
     visible: true
     is_binary: true
     learner_created: true
-  - name: out/production/classes/battleship/Main.class
+  - name: src/battleship/FehelerMeldung.java
     visible: true
-    is_binary: true
     learner_created: true
   - name: out/production/classes/battleship/Main$userException.class
     visible: true
     is_binary: true
     learner_created: true
+  - name: out/production/classes/battleship/Main.class
+    visible: true
+    is_binary: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35305#comment
 status: Unchecked
+feedback:
+  message: Local check isn't available
+  time: "Tue, 09 Jul 2024 12:21:07 UTC"
 record: 2
