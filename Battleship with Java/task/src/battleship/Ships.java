@@ -1,6 +1,6 @@
 package battleship;
 
-public enum ShipsLength {
+public enum Ships {
     AIRCRAFTCARRIER(5),
     BATTLESHIP(4),
     SUBMARINE(3),
@@ -9,7 +9,7 @@ public enum ShipsLength {
 
     private final int legth;
 
-    ShipsLength(int legth) {
+    Ships(int legth) {
         this.legth = legth;
     }
 
