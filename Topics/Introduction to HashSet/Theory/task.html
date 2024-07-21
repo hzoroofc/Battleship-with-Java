@@ -1,0 +1,163 @@
+<div class="step-text">
+<p>This topic introduces <code class="language-java">HashSet</code>, the most commonly used implementation of the <code class="language-java">Set</code> interface. The class embodies a mathematical set and is designed for storing unique elements. We will cover its features, frequently used methods, constructors, and <a class="theory-lookup not-relevant" href="/learn/step/34572" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a limitation refers to a restriction or constraint placed on a class, method, or variable. | This can include things like the type of data that can be stored in a collection, the arguments that can be passed to a method, or the types that can be used as parameters in a generic class. For example, in the context of type bounds, a limitation might be placed on a class to only allow objects of a certain type or subtype to be stored within it. This can help ensure type safety and prevent errors at runtime. Additionally, limitations can also be placed on the behavior of certain classes or methods, such as the HashSet class, where limitations might exist on the types of data that can be stored or the methods that can be called.">limitations</a>.</p>
+<h5 id="hashset-behavior">HashSet behavior</h5>
+<p><code class="language-java">HashSet</code> is a collection designed for storing unique objects while offering high-performance access. It's not suitable for storing duplicate elements. The example below illustrates basic <code class="language-java">HashSet</code> functionality.</p>
+<pre><code class="language-java">import java.util.HashSet;
+import java.util.Set;
+
+public class HashSetDemo {
+    public static void main(String[] args) {
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        set.add("J. Gosling");
+        set.add("J. Bloch");
+        set.add("J. Gosling");
+        set.add("B. Kernighan");
+        set.add("J. Bloch");
+        set.add("J. Gosling");
+
+        System.out.println(set); // output: [J. Gosling, B. Kernighan, J. Bloch]
+    }
+}</code></pre>
+<p>Let's discuss some practical and essential characteristics of <code class="language-java">HashSet</code>. Elements in a <code class="language-java">HashSet</code> are inserted based on their content hash code, which means that <code class="language-java">HashSet</code> does not maintain the insertion order. While searching through the data is fast, the class does not offer a sorting method. It provides constant-time performance for basic operations such as add, remove, contains, and size. <code class="language-java">HashSet</code> contains unique elements, which may include a single null value. It's worth noting that <code class="language-java">HashSet</code> is not synchronized and, therefore, not <a class="theory-lookup not-relevant" href="/learn/step/34572" rel="noopener noreferrer nofollow" target="_blank" title="In Java, thread-safety refers to the ability of a program to function correctly when accessed by multiple threads concurrently. | When shared data is accessed by multiple threads, there can be issues related to visibility and atomicity. To address these issues, Java provides the concept of a monitor, which is a special mechanism that controls concurrent access to an object. Each object in Java has an associated implicit monitor, and a thread can acquire a monitor, preventing other threads from acquiring it until the owner releases it. When it comes to collections, classic collections like ArrayList, HashMap, and HashSet are not thread-safe, which means that they do not provide thread-safety guarantees. As a result, when multiple threads access and modify these collections concurrently, it can lead to problems such as data inconsistency or runtime exceptions. To address this, Java provides synchronized collections like Vector, Hashtable, and Collections.synchronizedList, which are thread-safe but have lower performance.">thread-safe</a>. While it's possible to make <code class="language-java">HashSet</code> thread-safe, that topic is beyond the scope of this discussion. For further details, consulting the official <a href="https://docs.oracle.com/en/java/javase/17/docs/api//java.base/java/util/HashSet.html" rel="noopener noreferrer nofollow" target="_blank">documentation</a> is highly recommended. To summarize, here is a list of essential facts about <code class="language-java">HashSet</code>:</p>
+<ul><li><p><code class="language-java">HashSet</code> contains only unique elements — no duplicates allowed.</p></li><li><p>A set can include a single null value.</p></li><li><p>Elements are stored based on hashing.</p></li><li><p>The insertion order is not maintained — unordered.</p></li><li><p>There is no sort method — unsorted.</p></li><li><p>Search operations are fast.</p></li><li><p>Not synchronized — hence, not thread-safe.</p></li></ul>
+<h5 id="constructors">Constructors</h5>
+<p>The two fundamental constructors for <code class="language-java">HashSet</code> are as follows:</p>
+<ul><li><p><code class="language-java">public HashSet()</code></p></li><li><p><code class="language-java">public HashSet(Collection&lt;? extends E&gt; c)</code></p></li></ul>
+<p>For the first constructor, you can create an empty set. Initially, since no elements have been added, the output will display an empty set, represented as <code class="language-java">[]</code>. To populate the set, you can employ the <code class="language-java">add</code> or <code class="language-java">addAll</code> methods.</p>
+<pre><code class="language-java">Set&lt;String&gt; set = new HashSet&lt;&gt;();
+System.out.println(set); // output: []
+</code></pre>
+<p>For the second constructor, which can be described as a copy or conversion constructor, a new set is created that contains the elements from a specified collection. In the example below, the collection is a <code class="language-java">list</code>. Since a set cannot contain duplicate elements, adding items that are already present will have no effect.</p>
+<pre><code class="language-java">List&lt;String&gt; list = List.of("Mars","Earth", "Jupiter", "Mars");
+Set&lt;String&gt; set = new HashSet&lt;&gt;(list);
+System.out.println(set); // output: [Earth, Mars, Jupiter]</code></pre>
+<p>Alternatively, you could accomplish the same outcome as in the above example by taking an extra step: first, create an empty set and then use the <code class="language-java">addAll</code> method. However, it is generally preferable to utilize the parametrized constructor, as demonstrated earlier. The longer version is illustrated below for your reference.</p>
+<pre><code class="language-java">List&lt;String&gt; list = List.of("Mars","Earth", "Jupiter", "Mars");
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.addAll(list);
+System.out.println(set); // output: [Earth, Mars, Jupiter]</code></pre>
+<h5 id="methods">Methods</h5>
+<p>Now let's delve into the primary <code class="language-java">HashSet</code> methods that you can utilize in your applications. The first one to discuss is the <code class="language-java">add()</code> method. Methods that operate by searching for elements, including this one, typically have O(1) time complexity. The methods we'll review are as follows:</p>
+<ul><li><p><code class="language-java">add(E e)</code> — Adds the element if it's not already present and returns <code class="language-java">true</code>.</p></li><li><p><code class="language-java">contains(Object o)</code> — Returns <code class="language-java">true</code> if the set contains the specified element.</p></li><li><p><code class="language-java">remove(Object o)</code> — Removes the element from the set if it is present and returns <code class="language-java">true</code>.</p></li><li><p><code class="language-java">isEmpty()</code> — Returns <code class="language-java">true</code> if the set has no elements.</p></li><li><p><code class="language-java">size()</code> — Returns the number of elements in the set.</p></li><li><p><code class="language-java">toArray()</code> — Returns all the elements in the set as an array.</p></li><li><p><code class="language-java">clear()</code> — Removes all elements from the set.</p></li><li><p><code class="language-java">iterator()</code> — Returns an iterator for the elements in this set.</p></li></ul>
+<p>To utilize the <code class="language-java">add()</code> method, start by creating a set. You can then add unique elements to this new set. Attempting to add a duplicate element will result in a <code class="language-java">false</code> return value.</p>
+<pre><code class="language-java">Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("Mars"); // true
+set.add("Earth"); // true 
+set.add("Jupiter"); // true
+set.add("Mars"); // false
+
+// set contains [Mars, Earth, Jupiter]</code></pre>
+<p>Beyond using <code class="language-java">String</code>, you can use <code class="language-java">HashSet</code> with various wrapper classes:</p>
+<pre><code class="language-java">Set&lt;String&gt; set1 = new HashSet&lt;&gt;();
+set1.add("Venus");
+
+Set&lt;Boolean&gt; set2 = new HashSet&lt;&gt;();
+set2.add(true);
+
+Set&lt;Character&gt; set3 = new HashSet&lt;&gt;();
+set3.add('G');
+
+Set&lt;Byte&gt; set4 = new HashSet&lt;&gt;();
+set4.add((byte) 7);
+
+Set&lt;Short&gt; set5 = new HashSet&lt;&gt;();
+set5.add((short) 5);
+
+Set&lt;Integer&gt; set6 = new HashSet&lt;&gt;();
+set6.add(9123);
+
+Set&lt;Long&gt; set7 = new HashSet&lt;&gt;();
+set7.add(34000L);
+
+Set&lt;Float&gt; set8 = new HashSet&lt;&gt;();
+set8.add(4.5F);
+
+Set&lt;Double&gt; set9 = new HashSet&lt;&gt;();
+set9.add(345678923D);</code></pre>
+<p>The <code class="language-java">add()</code> method isn't the only way to populate a <code class="language-java">HashSet</code>. Starting from Java 9, you can use the static method <code class="language-java">of()</code> from the <code class="language-java">Set</code> interface to create an <a class="theory-lookup not-relevant" href="/learn/step/34572" rel="noopener noreferrer nofollow" target="_blank" title="In Java, an immutable set is a collection that contains unique elements, just like a mathematical set, and once created, its elements cannot be modified. | The set interface in Java provides both mutable and immutable set implementations such as HashSet, TreeSet, and LinkedHashSet. However, an immutable set cannot be modified once created, meaning that methods that modify the set, such as add(), remove(), or clear(), will throw an UnsupportedOperationException. Immutable sets are useful in scenarios where you need to keep only unique elements within a collection, get rid of duplicates in a sequence, or perform mathematical operations, while ensuring that the set remains unchanged.">immutable set</a>. Adding any elements to such a set will throw an <code class="language-java">UnsupportedOperationException</code>:</p>
+<pre><code class="language-java">Set&lt;String&gt; set = Set.of("Mars","Earth", "Jupiter");
+set.add("Venus"); // UnsupportedOperationException</code></pre>
+<p>Duplicate elements when using <code class="language-java">of()</code> will result in an <code class="language-java">IllegalArgumentException</code>.</p>
+<pre><code class="language-java">Set&lt;String&gt; set = Set.of("Mars","Earth", "Jupiter", "Mars"); // IllegalArgumentException</code></pre>
+<p><code class="language-java">HashSet</code> doesn't provide a method to get an element. Instead, there is a method that checks for the presence of an element. We use the <code class="language-java">contains()</code> method, as seen below. This example uses <code class="language-java">Set.of()</code> to build the <code class="language-java">HashSet</code>.</p>
+<pre><code class="language-java">Set&lt;String&gt; set = new HashSet&lt;&gt;(Set.of("J. Gosling"));
+set.contains("J. Gosling") // output: true</code></pre>
+<p>Owing to its optimized internal structure, the <code class="language-java">contains()</code> method in a <code class="language-java">HashSet</code> can operate significantly faster than its counterpart in a <code class="language-java">List</code> interface. For instance, the <code class="language-java">contains()</code> method in an <code class="language-java">ArrayList</code> scans through each element to find a match, resulting in a time complexity of O(n). However, the <code class="language-java">contains()</code> method in a <code class="language-java">HashSet</code> is able to locate the correct element efficiently—generally in constant time, or O(1). This same performance advantage extends to the <code class="language-java">remove()</code> method in a <code class="language-java">HashSet</code> as well.</p>
+<p>Moving on, let's discuss how <code class="language-java">HashSet</code> manages the removal of elements. Unlike collections that implement the <code class="language-java">List</code> interface, HashSet does not provide a <code class="language-java">get()</code> method for retrieving elements. However, it offers two convenient methods for element removal. The first is <code class="language-java">remove()</code>, which removes a specific element if it is present in the set. The second method, <code class="language-java">clear()</code>, is used for purging all elements from the set. Examples illustrating the use of both these methods, as well as the <code class="language-java">size()</code> and <code class="language-java">isEmpty()</code> methods, will be provided in the subsequent sections.</p>
+<p>We can always check the current size of a set with the <code class="language-java">size()</code> method, which returns the size as an integer value. Also, checking for an empty set is just as easy with the <code class="language-java">isEmpty()</code> method, which returns true when the set is empty.</p>
+<pre><code class="language-java">Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("J. Gosling");
+set.add("J. Bloch");
+set.add("B. Eckel");
+
+set.remove("J. Gosling"); // output: true
+
+set.size(); // output: 2
+
+set.clear(); // removes all elements
+
+set.isEmpty() // output: true</code></pre>
+<p>The next method we'll examine is <code class="language-java">toArray()</code> which is used for converting a set into an array. This method comes in two flavors: The first version does not require any arguments and returns an array of <code class="language-java">Object</code> types. The second version, on the other hand, accepts one argument—indicating the type of array you wish to return—and provides an array of that specified type. The example code below demonstrates these two different usages. The first returns only <code class="language-java">Object</code> type. The second returns the runtime type as provided — <code class="language-java">String[]</code>. Depending on the application, you can use any wrapper type.</p>
+<pre><code class="language-java">import java.util.HashSet;
+import java.util.Set;
+
+class Set2Array {
+    public static void main(String[] args) {
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        set.add("J. Gosling");
+        set.add("J. Bloch");
+        set.add("B. Eckel");
+
+        Object[] object = set.toArray();
+        System.out.println("Array type: Object");
+        for (Object name : object) {
+            System.out.println(name);
+        }
+
+        String[] specified = set.toArray(new String[0]);
+        System.out.println("\nArray type &lt;T&gt; T[]: String ");
+        for (String name : specified) {
+            System.out.println(name);
+        }
+    }
+}</code></pre>
+<p>Here we show the output of this program illustrating the two types of the <code class="language-java">toArray</code> method.</p>
+<pre><code class="language-java">Array type: Object
+J. Gosling
+B. Eckel
+J. Bloch
+
+Array type &lt;T&gt; T[]: String 
+J. Gosling
+B. Eckel
+J. Bloch
+</code></pre>
+<p>The <code class="language-java">iterator()</code> method returns an iterator over the elements in a set. Note that the elements are returned in no specific order. Additionally, the iterator is "fail-fast," meaning it throws a <code class="language-java">ConcurrentModificationException</code> if the collection is modified during iteration. This exception is thrown to indicate that the collection should not be changed while being iterated over, except through the iterator's own <code class="language-java">remove()</code> method. The example program below demonstrates this behavior: it operates as expected when simply printing output, but using the <code class="language-java">HashSet</code>'s <code class="language-java">remove()</code> method in conjunction with its <code class="language-java">iterator()</code> method will result in a <code class="language-java">ConcurrentModificationException</code>.</p>
+<pre><code class="language-java">import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+class hashSetIterator {
+    public static void main(String[] args) {
+        Set&lt;Integer&gt; integers = new HashSet&lt;&gt;();
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+
+        Iterator&lt;Integer&gt; iterator = integers.iterator();
+        while (iterator.hasNext()) {
+            Integer number = iterator.next();
+            System.out.print(number + " "); // output: 1 2 3
+            //integers.remove(number); // ConcurrentModificationException
+        }
+    }
+}</code></pre>
+<p></p>
+<div class="alert alert-warning"><p>From JavaDoc: <em>The iterators returned by this class's </em><code class="language-java">iterator</code> method are fail-fast. Specifically, if the set is modified at any point after the iterator has been created—except through the iterator's own <code class="language-java">remove</code> method—the Iterator will throw a <code class="language-java">ConcurrentModificationException</code>. This ensures that in the event of concurrent modification, the iterator fails both quickly and cleanly, instead of risking unpredictable, non-deterministic behavior at some undetermined point in the future.</p></div>
+<p></p>
+<h5 id="limitations">Limitations</h5>
+<p>Up to this point, we have used <code class="language-java">HashSet</code> exclusively with predefined classes such as <code class="language-java">String</code> and <code class="language-java">Integer</code>. However, many use cases require the storage of objects based on user-defined classes. We have yet to address this topic, in part because of its added complexity. Storing such objects can be safe only if managed properly. Precise checks and comparisons are necessary to determine object equality when working with user-defined classes. Thread safety is another issue; if multiple threads need to access the <code class="language-java">HashSet</code>, you must implement synchronization mechanisms. Lastly, <code class="language-java">HashSet</code> relies on internal hash functions. If these are not well-designed, it could result in performance problems. Specifically, a poor distribution of elements' hash codes could lead to degraded performance.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>We have explored the nature of the <code class="language-java">HashSet</code> class and summarized the essential information you need to effectively utilize this collection. We have covered both its advantages and disadvantages. <code class="language-java">HashSet</code> is the most commonly used implementation of the <code class="language-java">Set</code> interface, and its primary benefit is that it prevents the addition of duplicate values. While <code class="language-java">HashSet</code> has internal mechanisms that are beyond the scope of this discussion, you can use it effectively without delving into those complexities. The constructors and methods described in this topic equip you with the tools you'll need to incorporate <code class="language-java">HashSet</code> into your work.</p>
+</div>

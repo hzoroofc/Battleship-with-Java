@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: A collection of objects
+  - text: A collection of key-value pairs
+  - text: A queue
+  - text: An array
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/36536#comment
+status: Solved
+record: -1
+custom_name: Is it a collection?
+local_check: false

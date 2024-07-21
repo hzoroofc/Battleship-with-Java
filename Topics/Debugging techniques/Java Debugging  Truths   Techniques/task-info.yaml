@@ -1,0 +1,22 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Including detailed log messages using Logger can help in tracking down bugs
+      and understanding the program&#x27;s flow
+  - text: "In order to fix a bug, it is more helpful to rely on compiler error messages\
+    \ rather than analyzing the logic and design of the code"
+  - text: "Debugging techniques, such as setting breakpoints, allow developers to temporarily\
+    \ pause the program execution and investigate its state"
+  - text: "By using proper exception handling hierarchy, we can catch and handle more\
+    \ specific exceptions rather than generic ones"
+  - text: It is not necessary to fix bugs found during debugging since the code executes
+      without errors
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/29957#comment
+status: Solved
+record: -1
+custom_name: "Java Debugging: Truths & Techniques"
+local_check: false

@@ -1,0 +1,17 @@
+type: code
+files:
+  - name: src/Main.java
+    visible: true
+    highlight_level: NONE
+    learner_created: false
+  - name: src/Person.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/13776#comment
+status: Failed
+feedback:
+  message: |
+    Failed test #3 of 4. Wrong answer
+  time: "Mon, 15 Jul 2024 22:16:31 UTC"
+record: -1
+submission_language: java17

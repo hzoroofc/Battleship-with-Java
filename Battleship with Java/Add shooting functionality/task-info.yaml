@@ -6,6 +6,40 @@ files:
   - name: test/Tests.java
     visible: false
     learner_created: false
+  - name: out/production/classes/battleship/Aufgabe1CreateTheField.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main$userException.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/BattleshipLength.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: out/production/classes/battleship/Main.class
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: src/battleship/Ships.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/ShipDetail.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/AchseY.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/BattleAreaCell.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/FromAndToShipKoord.java
+    visible: true
+    learner_created: true
+  - name: src/battleship/PruefMeldungen.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/35306#comment
 status: Unchecked
-record: -1
+record: 3

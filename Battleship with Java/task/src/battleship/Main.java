@@ -16,7 +16,6 @@ public class Main {
                 BattleAreaCell battleAreaCell = new BattleAreaCell(achseY, j, false, false);
                 battleAreaRecList.add(battleAreaCell);
             }
-            //System.out.println(battleAreaRecList);
             battleAreaRecListTab.add(battleAreaRecList);
 
         }
@@ -29,12 +28,12 @@ public class Main {
         for (int i = 1; i <= battleAreaRecListTab.size(); i++) {
             System.out.print(String.valueOf(i).concat(" "));
         }
-        System.out.println("");
+        System.out.println();
 
-        for (int i = 0; i < battleAreaRecListTab.size(); i++) {
-            System.out.print(String.valueOf(battleAreaRecListTab.get(i).stream().toList().get(0).yKoordn()).concat(" "));
-            for (int j = 0; j < battleAreaRecListTab.get(i).stream().toList().size(); j++) {
-                System.out.print( (battleAreaRecListTab.get(i).stream().toList().get(j).besetzt()) ? "0 " : "~ ");
+        for (List<BattleAreaCell> battleAreaCells : battleAreaRecListTab) {
+            System.out.print(String.valueOf(battleAreaCells.stream().toList().get(0).yKoordn()).concat(" "));
+            for (int j = 0; j < battleAreaCells.stream().toList().size(); j++) {
+                System.out.print((battleAreaCells.stream().toList().get(j).besetzt()) ? "0 " : "~ ");
             }
             System.out.println();
         }
@@ -56,140 +55,143 @@ public class Main {
     }
 
 
-    public static boolean pruefeKoordinaten(FromAndToShipKoord fromAndToShipKoord) {
+    public static List<PruefMeldungen> pruefeKoordinaten(FromAndToShipKoord fromAndToShipKoord) {
 
-        boolean pruefung = true;
+
+        List<PruefMeldungen> pruefMeldungen = new ArrayList<>();
+
 
         if ((int) fromAndToShipKoord.toY() > 74 ||
                 (int) fromAndToShipKoord.toY() < 65 ||
                 (int) fromAndToShipKoord.fromY() < 65 ||
                 (int) fromAndToShipKoord.fromY() > 74
         ) {
-            System.out.println("Schiff nicht im Feld Y");
-            pruefung = false;
+            pruefMeldungen.add(PruefMeldungen.PLACED_OUTSIDE);
         }
 
         if (fromAndToShipKoord.toX() > 10 || fromAndToShipKoord.toX() < 1 ||
                 fromAndToShipKoord.fromX() > 10 || fromAndToShipKoord.fromX() < 1) {
-            System.out.println("Schiff nicht im Feld X");
-            pruefung = false;
+            pruefMeldungen.add(PruefMeldungen.PLACED_OUTSIDE);
         }
 
         if (fromAndToShipKoord.fromY() != fromAndToShipKoord.toY()) {
             if (fromAndToShipKoord.toX() != fromAndToShipKoord.fromX()) {
-                System.out.println("Schiff steht diagonal.");
-                pruefung = false;
+                pruefMeldungen.add(PruefMeldungen.WRONG_SHIPLOCATION);
             }
         }
 
         if (fromAndToShipKoord.getShipLengthEingabe() != Ships.valueOf(fromAndToShipKoord.shipName()).getLegth()) {
-            System.out.println("fromAndToShipKoord.getShipLengthEingabe() = " + fromAndToShipKoord.getShipLengthEingabe());
-            System.out.println("Ships.valueOf(fromAndToShipKoord.shipName()).getLegth() = " + Ships.valueOf(fromAndToShipKoord.shipName()).getLegth());
-            System.out.println("Schiff hat falsche Länge!");
-            pruefung = false;
+            pruefMeldungen.add(PruefMeldungen.WRONG_SHIPLENGTH);
         }
 
-        return pruefung;
+        return pruefMeldungen;
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        List<AchseY> yAchse = new ArrayList<>();
+        yAchse = Arrays.stream(AchseY.values()).toList();
+
+        List<List<BattleAreaCell>> battleAreaRecListTab = new ArrayList<>();
+
         List<List<BattleAreaCell>> battleArea = battelArea();
+
 
         battleAreaPrint(battleArea);
 
-
         List<String> occupiedFields = new ArrayList<String>();
         List<String> adjacentFields = new ArrayList<String>();
+
 
         for(Ships ships : Ships.values()) {
 
 
             Scanner scanner = new Scanner(System.in);
-
+            List<PruefMeldungen> pruefMeldungen = new ArrayList<>();
             boolean korrekteKoordnEingabe = false;
             String[] koordFromToArr = null;
-            FromAndToShipKoord fromAndToShipKoord = null;
-            boolean felderBereitsBesetzt = false;
-            boolean pruefung = false;
+            battleAreaRecListTab.clear();
+
             do {
                 try {
-                    felderBereitsBesetzt = false;
-                    fromAndToShipKoord = null;
-
-
+                    FromAndToShipKoord fromAndToShipKoord = null;
                     System.out.println("Enter the coordinates of the " + ships.name() + " (" + ships.getLegth() + " cells):");
                     String koordnEingabe = scanner.nextLine();
                     korrekteKoordnEingabe = true;
                     koordFromToArr = koordnEingabe.split("\\s+");
                     fromAndToShipKoord = getFromAndToShipKoord(koordFromToArr[0], koordFromToArr[1], ships.name());
+                    pruefMeldungen = pruefeKoordinaten(fromAndToShipKoord);
 
                     for (String occupiedField : occupiedFields) {
                         if (fromAndToShipKoord.getAreafields().contains(occupiedField)) {
-                            System.out.println(occupiedField);
-                            felderBereitsBesetzt = true;
+                            pruefMeldungen.add(PruefMeldungen.FIELD_OCCUPIED);
                             break;
                         }
                     }
 
                     for (String adjacentField : adjacentFields) {
                         if (fromAndToShipKoord.getAreafields().contains(adjacentField)) {
-                            System.out.println("Felder besetzt!");
-                            System.out.println(fromAndToShipKoord.getAreafields());
-                            felderBereitsBesetzt = true;
+                            pruefMeldungen.add(PruefMeldungen.TOO_CLOSE_TO_OTHERSHIP);
                             break;
                         }
                     }
 
-                    if(!pruefeKoordinaten(fromAndToShipKoord) || felderBereitsBesetzt){
-                        pruefung = false;
+                    if(!pruefMeldungen.isEmpty()){
                         occupiedFields.removeAll(fromAndToShipKoord.getAreafields());
-                        System.out.println("Error!");
+                        for (PruefMeldungen meldungen : pruefMeldungen) {
+                            System.out.println(PruefMeldungen.valueOf(meldungen.name()).getFehlermeldung().concat(" Try again!"));
+                        }
                     } else {
-                        pruefung = true;
                         occupiedFields.addAll(fromAndToShipKoord.getAreafields());
                         adjacentFields = fillAdjacent(occupiedFields);
-                        fromAndToShipKoord = null;
+
+                        for (AchseY achseY : yAchse) {
+                            List<BattleAreaCell> battleAreaRecList = getBattleAreaCells(achseY, occupiedFields);
+                            battleAreaRecListTab.add(battleAreaRecList);
+
+                        }
+                        battleAreaPrint(battleAreaRecListTab);
                     }
 
                 } catch (Exception e)  {
                     korrekteKoordnEingabe = false;
-                    System.out.println("Wrong entry! Try again!");
-                    System.out.println("Enter the coordinates of the " + ships.name() + " (" + ships.getLegth() + " cells):");
+                    System.out.println(e.toString());
+                    System.out.println(e.getCause().toString());
                 }
-            } while ( !korrekteKoordnEingabe || !pruefung);
-
-
-
-
+            } while ( !pruefMeldungen.isEmpty() || !korrekteKoordnEingabe);
         }
+    }
 
-
-
-
+    private static List<BattleAreaCell> getBattleAreaCells(AchseY achseY, List<String> occupiedFields) {
+        List<BattleAreaCell> battleAreaRecList = new ArrayList<>();
+        for (int j = 1; j < 11; j++) {
+            if(occupiedFields.contains(achseY.name().concat(String.valueOf(j)))) {
+                BattleAreaCell battleAreaCell = new BattleAreaCell(achseY, j, true, false);
+                battleAreaRecList.add(battleAreaCell);
+            } else {
+                BattleAreaCell battleAreaCell = new BattleAreaCell(achseY, j, false, false);
+                battleAreaRecList.add(battleAreaCell);
+            }
+        }
+        return battleAreaRecList;
     }
 
     private static List<String> fillAdjacent(List<String> occupiedFields) {
         List<String> adjacentFields = new ArrayList<>();
         List<String> koordn = new ArrayList<>();
-        for (int i = 0; i < occupiedFields.size(); i++){
-            System.out.println("adjacent: " + occupiedFields.get(i));
-            koordn = List.of(occupiedFields.get(i).split(""));
+        for (String occupiedField : occupiedFields) {
+            koordn = List.of(occupiedField.split(""));
 
             String yK = (String) koordn.get(0);
             List<String> xK = koordn.subList(1, koordn.size());
-            String xKstr = "";
-            for (int j = 0; j < xK.size();j++) {
-                xKstr += xK.get(j);
+            StringBuilder xKstr = new StringBuilder();
+            for (String s : xK) {
+                xKstr.append(s);
             }
-            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr)+1)));
-            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr)-1)));
-            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0)+1)).concat(xKstr));
-            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0)-1)).concat(xKstr));
-
-
-
-
+            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr.toString()) + 1)));
+            adjacentFields.add(yK.concat(String.valueOf(Integer.parseInt(xKstr.toString()) - 1)));
+            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0) + 1)).concat(xKstr.toString()));
+            adjacentFields.add(String.valueOf((char) ((int) yK.charAt(0) - 1)).concat(xKstr.toString()));
         }
 
         return adjacentFields;

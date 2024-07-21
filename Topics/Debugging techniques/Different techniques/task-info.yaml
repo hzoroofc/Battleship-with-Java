@@ -1,0 +1,21 @@
+type: matching
+captions:
+  - Assertion
+  - Debugger
+  - Logging
+options:
+  - A boolean expression that throws an error when some condition is not met
+  - The technique that involves writing runtime events to the console or a file
+  - A tool that allows you to get detailed information about the program while it is
+    running
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13783#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
